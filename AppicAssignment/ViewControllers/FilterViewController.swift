@@ -20,11 +20,24 @@ class FilterViewController: UIViewController {
     var index = 0
     var companyname = ["CITY CENTRE COMMERCIAL CO.KSC", "PHARMA ZONE GENERAL CO"]
     let filterCategory = ["Select Account Number", "Select Brand",  "Select Locations"]
+    var filterMerchantData: MerchantData?
     
     //TODO: REMOVE
-    let accountCount = 0
-    let brandCount = 0
-    let locationCount = 0
+    var accountCount = 0 {
+        didSet {
+            btnAccount.setTitle("A/C No.: \(accountCount)", for: .normal)
+        }
+    }
+    var brandCount = 0 {
+        didSet {
+            btnBrand.setTitle("Brand : \(brandCount)", for: .normal)
+        }
+    }
+    var locationCount = 0 {
+        didSet {
+            btnLocation.setTitle("A/C No.: \(locationCount)", for: .normal)
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,8 +48,7 @@ class FilterViewController: UIViewController {
         tblView.delegate = self
         tblView.dataSource = self
         tblView.tableFooterView = UIView()
-        tblView.reloadData()
-        
+        fetchData()
     }
     
     private func setupUI() {
@@ -46,15 +58,9 @@ class FilterViewController: UIViewController {
         self.companyName.setTitle(companyname[index] , for: .normal)
         companyName.sizeToFit()
         
-        btnAccount.setTitle("Acc No.: \(accountCount)", for: .normal)
         btnAccount.layer.cornerRadius = 5
-        
-        btnBrand.setTitle("Brand : \(accountCount)", for: .normal)
         btnBrand.layer.cornerRadius = 5
-        
-        btnLocation.setTitle("Location : \(accountCount)", for: .normal)
         btnLocation.layer.cornerRadius = 5
-        
         
         btnBrand.sizeToFit()
         btnBrand.addLeftPadding(10)
@@ -64,6 +70,18 @@ class FilterViewController: UIViewController {
         btnAccount.addLeftPadding(10)
     }
     
+    func fetchData() {
+        if let path = Bundle.main.path(forResource: "testjson", ofType: "json") {
+            do {
+                let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
+                filterMerchantData = try JSONDecoder().decode(MerchantData.self, from: data)
+                tblView.reloadData()
+              } catch {
+                    print("Failed to decode")
+              }
+        }
+    }
+
     @IBAction func clearAllFilter(_ sender: Any) {
         
     }
@@ -81,14 +99,28 @@ extension FilterViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "maincell", for: indexPath) as! FilterMainCell
-        
         cell.lblFilterName.text = filterCategory[indexPath.row]
-        cell.lblFilterCount.text = "0"
+        if indexPath.row == 0 {
+            let count = filterMerchantData?.filterData[index].accountList.count
+            accountCount = count ?? 0
+            cell.lblFilterCount.text = String(count ?? 0)
+            
+        }else if indexPath.row == 1 {
+            let count = filterMerchantData?.filterData[index].brandList.count
+            brandCount = count ?? 0
+            cell.lblFilterCount.text = String(count ?? 0)
+            
+        }else {
+            let count = filterMerchantData?.filterData[index].locationList.count
+            locationCount = count ?? 0
+            cell.lblFilterCount.text = String(count ?? 0)
+            
+        }
         return cell
         
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
+        return 80
     }
 }
