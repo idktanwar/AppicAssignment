@@ -17,7 +17,8 @@ class FilterViewController: UIViewController {
     @IBOutlet weak var tblView: UITableView!
     @IBOutlet weak var btnClear: UIButton!
     
-    var companyname: String?
+    var index = 0
+    var companyname = ["CITY CENTRE COMMERCIAL CO.KSC", "PHARMA ZONE GENERAL CO"]
     let filterCategory = ["Select Account Number", "Select Brand",  "Select Locations"]
     
     //TODO: REMOVE
@@ -42,10 +43,7 @@ class FilterViewController: UIViewController {
         self.applyView.layer.cornerRadius = 10
         
         self.companyName.layer.cornerRadius = 8
-        guard let companyTite = companyname else {
-            return
-        }
-        self.companyName.setTitle(companyTite , for: .normal)
+        self.companyName.setTitle(companyname[index] , for: .normal)
         companyName.sizeToFit()
         
         btnAccount.setTitle("Acc No.: \(accountCount)", for: .normal)

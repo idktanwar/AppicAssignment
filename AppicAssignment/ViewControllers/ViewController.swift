@@ -21,17 +21,17 @@ class ViewController: UIViewController {
         menuView.didSelectItemAtIndexHandler = { [weak self] (indexPath: Int) -> () in
             print("Did select item at index: \(indexPath)")
             self?.navigationItem.title = "\(String(describing: self?.items[indexPath]))" + "\u{2304}"
-            self?.showFilterList(for: (String(describing: self?.items[indexPath])))
+            self?.showFilterList(for: (String(describing: self?.items[indexPath])), index: indexPath)
         }
         self.navigationItem.titleView = menuView
 
     }
     
-    func showFilterList(for company: String) {
+    func showFilterList(for company: String, index: Int) {
         print("Present filter option")
        
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "FilterViewController") as! FilterViewController
-        vc.companyname = company
+        vc.index = index
         
         let navigationController = UINavigationController(rootViewController: vc)
         
