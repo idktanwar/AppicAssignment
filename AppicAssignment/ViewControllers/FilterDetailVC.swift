@@ -11,7 +11,7 @@ protocol FilterDetailDelegate:class {
     func applyFilterToMain()
 }
 
-class FilterDetailVC: UIViewController {
+class FilterDetailVC: UIViewController, UISearchBarDelegate {
     
     //MARK:- Property
     @IBOutlet weak var tblView: UITableView!
@@ -24,10 +24,19 @@ class FilterDetailVC: UIViewController {
     var listItems:[String] = []
     var selectedItemsIndices:[IndexPath] = []
     var CategorySelected = 0
-    
+    var filteredData: [String]!
+
     //MARK:- LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupUI()
+    }
+    
+    //MARK:-Methods
+    func setupUI() {
+        self.navigationItem.hidesBackButton = true
+        searchBar.delegate = self
+        filteredData = listItems
         
         tblView.delegate = self
         tblView.dataSource = self
@@ -35,12 +44,6 @@ class FilterDetailVC: UIViewController {
         tblView.tableFooterView = UIView()
         tblView.reloadData()
         
-        setupUI()
-    }
-    
-    //MARK:-Methods
-    func setupUI() {
-        self.navigationItem.hidesBackButton = true
     }
     
     //MARK:- Selectors
@@ -58,6 +61,25 @@ class FilterDetailVC: UIViewController {
         btnSelectAll.setImage(UIImage(named: "selected"), for: .normal)
         tblView.reloadData()
     }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        filteredData = searchText.isEmpty ? listItems : listItems.filter({(dataString: String) -> Bool in
+            // If dataItem matches the searchText, return true to include it
+            return dataString.range(of: searchText, options: .caseInsensitive) != nil
+        })
+
+        tblView.reloadData()
+    }
+
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+            self.searchBar.showsCancelButton = true
+    }
+
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+            searchBar.showsCancelButton = false
+            searchBar.text = ""
+            searchBar.resignFirstResponder()
+    }
 }
 
 //MARK:- Tableview Delegate / Datasource
@@ -68,14 +90,14 @@ extension FilterDetailVC: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return listItems.count
+        return filteredData.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "detailcell", for: indexPath) as! FilterDetailCell
         self.selectedItemsIndices.append(indexPath)
         cell.btnSelected.setImage(UIImage(named: "selected"), for: .normal)
-        cell.lblSearchItem.text = listItems[indexPath.row]
+        cell.lblSearchItem.text = filteredData[indexPath.row]
         return cell
     }
     
