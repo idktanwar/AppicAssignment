@@ -17,9 +17,9 @@ class FilterDetailVC: UIViewController {
     @IBOutlet weak var tblView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var applyView: UIView!
+    @IBOutlet weak var btnSelectAll: UIButton!
     
     weak var delegate: FilterDetailDelegate?
-
     
     var listItems:[String] = []
     var selectedItemsIndices:[IndexPath] = []
@@ -34,6 +34,8 @@ class FilterDetailVC: UIViewController {
         tblView.rowHeight = UITableView.automaticDimension
         tblView.tableFooterView = UIView()
         tblView.reloadData()
+        
+        setupUI()
     }
     
     //MARK:-Methods
@@ -43,15 +45,18 @@ class FilterDetailVC: UIViewController {
     
     //MARK:- Selectors
     @IBAction func clearAllFilter(_ sender: Any) {
-        //        for index in self.selectedItemsIndices {
-        //            let cell = tblView.cellForRow(at: index) as! FilterDetailCell
-        //            cell.btnSelected.setImage(UIImage(named: "unselected"), for: .normal)
-        //        }
-        //        self.selectedItemsIndices.removeAll()
+        for index in self.selectedItemsIndices {
+            let cell = tblView.cellForRow(at: index) as! FilterDetailCell
+            cell.btnSelected.setImage(UIImage(named: "unselected"), for: .normal)
+        }
+        
+        btnSelectAll.setImage(UIImage(named: "unselected"), for: .normal)
+        self.selectedItemsIndices.removeAll()
     }
     
     @IBAction func selectedAllOption(_ sender: Any) {
-        
+        btnSelectAll.setImage(UIImage(named: "selected"), for: .normal)
+        tblView.reloadData()
     }
 }
 
@@ -69,6 +74,7 @@ extension FilterDetailVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "detailcell", for: indexPath) as! FilterDetailCell
         self.selectedItemsIndices.append(indexPath)
+        cell.btnSelected.setImage(UIImage(named: "selected"), for: .normal)
         cell.lblSearchItem.text = listItems[indexPath.row]
         return cell
     }
@@ -92,14 +98,14 @@ extension FilterDetailVC {
         if let touch = touches.first {
             if touch.view ==  applyView {
                 UserDefaults.standard.setValue(true, forKey: APPLY_STRING)
-
+                
                 var filteredData = Constant.APP_DELEGATE.filteredMerchantData
                 
                 if CategorySelected == 0 {
                     //account selcted
                     let accountModel = filteredData!.accountList
                     var selectedItem = [String]()
-                
+                    
                     for index in selectedItemsIndices {
                         let item = listItems[index.row]
                         _ = accountModel.filter({ (acc) -> Bool in
@@ -111,7 +117,7 @@ extension FilterDetailVC {
                             }
                         })
                     }
-                
+                    
                     filteredData?.accountList = selectedItem
                     Constant.APP_DELEGATE.filteredMerchantData = filteredData
                     
@@ -136,7 +142,7 @@ extension FilterDetailVC {
                     //for brandList filter
                     let brandModel = filteredData!.brandList
                     var selectedItem = [String]()
-                
+                    
                     for index in selectedItemsIndices {
                         let item = listItems[index.row]
                         _ = brandModel.filter({ (brand) -> Bool in
@@ -148,7 +154,7 @@ extension FilterDetailVC {
                             }
                         })
                     }
-                
+                    
                     filteredData?.brandList = selectedItem
                     Constant.APP_DELEGATE.filteredMerchantData = filteredData
                     
@@ -171,7 +177,7 @@ extension FilterDetailVC {
                                     return false
                                 }
                             }
-                           
+                            
                         }
                         hierarchy.brandNameList = brandList1
                         hierarchyData1.append(hierarchy)
@@ -185,7 +191,7 @@ extension FilterDetailVC {
                     //for location filter
                     let locationModel = filteredData!.locationList
                     var selectedItem = [String]()
-                
+                    
                     for index in selectedItemsIndices {
                         let item = listItems[index.row]
                         _ = locationModel.filter({ (location) -> Bool in
@@ -197,7 +203,7 @@ extension FilterDetailVC {
                             }
                         })
                     }
-                
+                    
                     filteredData?.locationList = selectedItem
                     Constant.APP_DELEGATE.filteredMerchantData = filteredData
                     

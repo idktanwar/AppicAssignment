@@ -342,6 +342,7 @@
                     </view>
                     <connections>
                         <outlet property="applyView" destination="FSO-qx-7yW" id="MvP-yF-dYm"/>
+                        <outlet property="btnSelectAll" destination="vPR-MC-lIa" id="8XJ-7V-cuq"/>
                         <outlet property="searchBar" destination="q2D-Fh-0Cz" id="xf0-2O-GlP"/>
                         <outlet property="tblView" destination="NcQ-5b-VAW" id="dYI-bl-OLY"/>
                     </connections>

@@ -79,8 +79,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 extension ViewController: ApplyMainDelegate {
     func applyFinalFilter(mid: [String]) {
         self.MIDs = mid
-        tblView.isHidden = false
-        lbl.isHidden = true
+        if mid.count > 0 {
+            tblView.isHidden = false
+            lbl.isHidden = true
+        }else {
+            tblView.isHidden = true
+            lbl.isHidden = false
+        }
         tblView.reloadData()
     }
 }
