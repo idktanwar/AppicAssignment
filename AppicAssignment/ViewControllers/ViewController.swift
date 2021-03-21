@@ -20,8 +20,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         super.viewDidLoad()
         
         let menuView = BTNavigationDropdownMenu(title: BTTitle.index(1), items: items)
+        menuView.cellBackgroundColor = UIColor.blueLight
         self.navigationItem.title = "\(items[0])" + "\u{2304}"
-        
+        navigationController?.navigationBar.barTintColor = UIColor.blueLight
+
         menuView.didSelectItemAtIndexHandler = { [weak self] (indexPath: Int) -> () in
             print("Did select item at index: \(indexPath)")
             self?.navigationItem.title = "\(String(describing: self?.items[indexPath]))" + "\u{2304}"
