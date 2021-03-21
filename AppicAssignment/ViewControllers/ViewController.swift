@@ -78,6 +78,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 //MARK:- ApplyMainDelegate
 extension ViewController: ApplyMainDelegate {
     func applyFinalFilter(mid: [String]) {
+        self.MIDs.removeAll()
         self.MIDs = mid
         if mid.count > 0 {
             tblView.isHidden = false
