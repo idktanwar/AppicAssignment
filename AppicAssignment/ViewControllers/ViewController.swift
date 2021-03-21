@@ -10,12 +10,12 @@ import BTNavigationDropdownMenu
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    //MARK:- Property
     @IBOutlet weak var tblView: UITableView!
-    
     let items = ["CITY CENTRE COMMERCIAL CO.KSC", "PHARMA ZONE GENERAL CO"]
-    
     var MIDs = [String]()
     
+    //MARK:- LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -37,6 +37,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         tblView.reloadData()
     }
     
+    //MARK:- Method
     func showFilterList(for company: String, index: Int) {
         print("Present filter option")
        
@@ -47,6 +48,15 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let navigationController = UINavigationController(rootViewController: vc)
          // Present View "Modally"
         self.present(navigationController, animated: true, completion: nil)
+    }
+    
+    func failedToGetProfile() {
+        let lbl = UILabel(frame: .zero)
+        lbl.text = "Failed to load followers list"
+        lbl.textColor = .secondaryLabel
+        lbl.sizeToFit()
+        view.addSubview(lbl)
+        lbl.center = view.center
     }
     
     //MARK:- TableView Delegate/Datasource
@@ -62,6 +72,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
   
 }
 
+//MARK:- ApplyMainDelegate
 extension ViewController: ApplyMainDelegate {
     func applyFinalFilter(mid: [String]) {
         self.MIDs = mid

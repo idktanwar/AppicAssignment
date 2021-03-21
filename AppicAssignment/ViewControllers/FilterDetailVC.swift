@@ -13,6 +13,7 @@ protocol FilterDetailDelegate:class {
 
 class FilterDetailVC: UIViewController {
     
+    //MARK:- Property
     @IBOutlet weak var tblView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var applyView: UIView!
@@ -24,6 +25,7 @@ class FilterDetailVC: UIViewController {
     var selectedItemsIndices:[IndexPath] = []
     var CategorySelected = 0
     
+    //MARK:- LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -34,10 +36,12 @@ class FilterDetailVC: UIViewController {
         tblView.reloadData()
     }
     
+    //MARK:-Methods
     func setupUI() {
         self.navigationItem.hidesBackButton = true
     }
     
+    //MARK:- Selectors
     @IBAction func clearAllFilter(_ sender: Any) {
         //        for index in self.selectedItemsIndices {
         //            let cell = tblView.cellForRow(at: index) as! FilterDetailCell
@@ -51,6 +55,7 @@ class FilterDetailVC: UIViewController {
     }
 }
 
+//MARK:- Tableview Delegate / Datasource
 extension FilterDetailVC: UITableViewDataSource, UITableViewDelegate {
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -81,6 +86,7 @@ extension FilterDetailVC: UITableViewDataSource, UITableViewDelegate {
     }
 }
 
+//MARK:-  touch delegate
 extension FilterDetailVC {
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let touch = touches.first {

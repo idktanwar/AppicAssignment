@@ -14,6 +14,7 @@ protocol ApplyMainDelegate:class {
 
 class FilterViewController: UIViewController {
     
+    //MARK:- Property
     @IBOutlet weak var applyView: UIView!
     @IBOutlet weak var btnAccount: UIButton!
     @IBOutlet weak var btnLocation: UIButton!
@@ -29,7 +30,6 @@ class FilterViewController: UIViewController {
     let filterCategory = ["Select Account Number", "Select Brand",  "Select Locations"]
     var filterMerchantData: MerchantData?
     
-    //TODO: REMOVE
     var accountCount = 0 {
         didSet {
             btnAccount.setTitle("A/C No.: \(accountCount)", for: .normal)
@@ -46,6 +46,7 @@ class FilterViewController: UIViewController {
         }
     }
     
+    //MARK:- LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Apply Filter"
@@ -58,6 +59,7 @@ class FilterViewController: UIViewController {
         fetchData()
     }
     
+    //MARK:- Methods
     private func setupUI() {
         self.applyView.layer.cornerRadius = 10
         
@@ -94,12 +96,14 @@ class FilterViewController: UIViewController {
         }
     }
     
+    //MARK:- Selectors
     @IBAction func clearAllFilter(_ sender: Any) {
         UserDefaults.standard.setValue(false, forKey: APPLY_STRING)
         fetchData()
     }
 }
 
+//MARK:- Tableview Delegate / Datasource
 extension FilterViewController: UITableViewDelegate, UITableViewDataSource, FilterDetailDelegate {
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -162,12 +166,13 @@ extension FilterViewController: UITableViewDelegate, UITableViewDataSource, Filt
     }
 }
 
+//MARK:- FilterViewController
 extension FilterViewController{
     func applyFilterToMain() {
         tblView.reloadData()
     }
 }
-
+//MARK:-  touch delegate
 extension FilterViewController {
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let touch = touches.first {
