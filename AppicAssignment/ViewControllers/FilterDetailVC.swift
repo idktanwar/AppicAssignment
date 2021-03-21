@@ -124,10 +124,7 @@ extension FilterDetailVC {
                     
                     filteredData?.hierarchy = hierarchyData1
                     Constant.APP_DELEGATE.filteredMerchantData = filteredData
-                    if (delegate != nil) {
-                        self.delegate?.applyFilterToMain()
-                    }
-                    self.navigationController?.popViewController(animated: true)
+                    
                 }
                 else if CategorySelected == 1 {
                     //for brandList filter
@@ -176,16 +173,66 @@ extension FilterDetailVC {
                     
                     filteredData?.hierarchy = hierarchyData1
                     Constant.APP_DELEGATE.filteredMerchantData = filteredData
-                    if (delegate != nil) {
-                        self.delegate?.applyFilterToMain()
-                    }
-                    self.navigationController?.popViewController(animated: true)
+                    
                 }
                 else {
                     //for location filter
+                    let locationModel = filteredData!.locationList
+                    var selectedItem = [String]()
+                
+                    for index in selectedItemsIndices {
+                        let item = listItems[index.row]
+                        _ = locationModel.filter({ (location) -> Bool in
+                            if location == item {
+                                selectedItem.append(location)
+                                return true
+                            }else {
+                                return false
+                            }
+                        })
+                    }
+                
+                    filteredData?.locationList = selectedItem
+                    Constant.APP_DELEGATE.filteredMerchantData = filteredData
                     
+                    //now filter the hierarchy
+                    let hierarchyData = filteredData?.hierarchy
+                    
+                    var hierarchyData1 = [Hierarchy]()
+                    
+                    hierarchyData?.forEach({ (data) in
+                        var hierarchy = data
+                        let brandList = data.brandNameList
+                        var brandListFiltered = [BrandNameList]()
+                        
+                        brandList.forEach { (brand1) in
+                            var filterBrandItem = brand1
+                            let locationList1 = brand1.locationNameList
+                            var filterLocationList = [LocationNameList]()
+                            selectedItem.forEach { (itemLocation) in
+                                locationList1.forEach { (location) in
+                                    if location.locationName == itemLocation {
+                                        filterLocationList.append(location)
+                                    }
+                                }
+                            }
+                            filterBrandItem.locationNameList = filterLocationList
+                            brandListFiltered.append(filterBrandItem)
+                        }
+                        
+                        hierarchy.brandNameList = brandListFiltered
+                        hierarchyData1.append(hierarchy)
+                        
+                    })
+                    
+                    filteredData?.hierarchy = hierarchyData1
+                    Constant.APP_DELEGATE.filteredMerchantData = filteredData
                 }
                 
+                if (delegate != nil) {
+                    self.delegate?.applyFilterToMain()
+                }
+                self.navigationController?.popViewController(animated: true)
             }
         }
     }
