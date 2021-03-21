@@ -10,10 +10,13 @@ import UIKit
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
-
+    var filteredMerchantData: FilterDatum?
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        //make filter their till the relaunch or clear filter
+        UserDefaults.standard.setValue(false, forKey: APPLY_STRING)
+
         return true
     }
 

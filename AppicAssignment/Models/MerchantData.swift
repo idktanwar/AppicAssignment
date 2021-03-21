@@ -16,8 +16,8 @@ struct MerchantData: Codable {
 // MARK: - FilterDatum
 struct FilterDatum: Codable {
     let cif, companyName: String
-    let accountList, brandList, locationList: [String]
-    let hierarchy: [Hierarchy]
+    var accountList, brandList, locationList: [String]
+    var hierarchy: [Hierarchy]
 
     enum CodingKeys: String, CodingKey {
         case cif = "Cif"
@@ -27,24 +27,24 @@ struct FilterDatum: Codable {
 
 // MARK: - Hierarchy
 struct Hierarchy: Codable {
-    let accountNumber: String
-    let brandNameList: [BrandNameList]
+    var accountNumber: String
+    var brandNameList: [BrandNameList]
 }
 
 // MARK: - BrandNameList
 struct BrandNameList: Codable {
-    let brandName: String
-    let locationNameList: [LocationNameList]
+    var brandName: String
+    var locationNameList: [LocationNameList]
 }
 
 // MARK: - LocationNameList
 struct LocationNameList: Codable {
-    let locationName: String
-    let merchantNumber: [MerchantNumber]
+    var locationName: String
+    var merchantNumber: [MerchantNumber]
 }
 
 // MARK: - MerchantNumber
 struct MerchantNumber: Codable {
-    let mid: String
-    let outletNumber: [String]
+    var mid: String
+    var outletNumber: [String]
 }

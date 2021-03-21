@@ -11,6 +11,8 @@
 		9814543E2606409800484635 /* FilterMainCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9814543D2606409800484635 /* FilterMainCell.swift */; };
 		98145441260640AF00484635 /* FilterDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98145440260640AF00484635 /* FilterDetailCell.swift */; };
 		981454452606568B00484635 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981454442606568B00484635 /* Extension.swift */; };
+		98145449260663EE00484635 /* FilterDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98145448260663EE00484635 /* FilterDetailVC.swift */; };
+		9814544C26067EE600484635 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9814544B26067EE600484635 /* Constants.swift */; };
 		9817FB9826063A340054D78E /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9817FB9726063A340054D78E /* FilterViewController.swift */; };
 		986140EB260628BE0071E200 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986140EA260628BE0071E200 /* AppDelegate.swift */; };
 		986140ED260628BE0071E200 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986140EC260628BE0071E200 /* SceneDelegate.swift */; };
@@ -29,6 +31,8 @@
 		9814543D2606409800484635 /* FilterMainCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterMainCell.swift; sourceTree = "<group>"; };
 		98145440260640AF00484635 /* FilterDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterDetailCell.swift; sourceTree = "<group>"; };
 		981454442606568B00484635 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
+		98145448260663EE00484635 /* FilterDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterDetailVC.swift; sourceTree = "<group>"; };
+		9814544B26067EE600484635 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		9817FB9726063A340054D78E /* FilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		986140E7260628BE0071E200 /* AppicAssignment.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AppicAssignment.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		986140EA260628BE0071E200 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -78,6 +82,7 @@
 			isa = PBXGroup;
 			children = (
 				981454442606568B00484635 /* Extension.swift */,
+				9814544B26067EE600484635 /* Constants.swift */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -87,6 +92,7 @@
 			children = (
 				986140EE260628BE0071E200 /* ViewController.swift */,
 				9817FB9726063A340054D78E /* FilterViewController.swift */,
+				98145448260663EE00484635 /* FilterDetailVC.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -268,10 +274,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				98145449260663EE00484635 /* FilterDetailVC.swift in Sources */,
 				9814543E2606409800484635 /* FilterMainCell.swift in Sources */,
 				9817FB9826063A340054D78E /* FilterViewController.swift in Sources */,
 				986140EF260628BE0071E200 /* ViewController.swift in Sources */,
 				98145441260640AF00484635 /* FilterDetailCell.swift in Sources */,
+				9814544C26067EE600484635 /* Constants.swift in Sources */,
 				9861410626062A370071E200 /* MerchantData.swift in Sources */,
 				986140EB260628BE0071E200 /* AppDelegate.swift in Sources */,
 				986140ED260628BE0071E200 /* SceneDelegate.swift in Sources */,
