@@ -14,6 +14,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBOutlet weak var tblView: UITableView!
     let items = ["CITY CENTRE COMMERCIAL CO.KSC", "PHARMA ZONE GENERAL CO"]
     var MIDs = [String]()
+    var lbl = UILabel(frame: .zero)
     
     //MARK:- LifeCycle
     override func viewDidLoad() {
@@ -35,6 +36,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         tblView.dataSource = self
         tblView.tableFooterView = UIView()
         tblView.reloadData()
+        tblView.isHidden = true
+        
+        dataNotFound()
     }
     
     //MARK:- Method
@@ -50,9 +54,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.present(navigationController, animated: true, completion: nil)
     }
     
-    func failedToGetProfile() {
-        let lbl = UILabel(frame: .zero)
-        lbl.text = "Failed to load followers list"
+    func dataNotFound() {
+        lbl.text = "Data not found, please update filter from top"
         lbl.textColor = .secondaryLabel
         lbl.sizeToFit()
         view.addSubview(lbl)
@@ -76,6 +79,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 extension ViewController: ApplyMainDelegate {
     func applyFinalFilter(mid: [String]) {
         self.MIDs = mid
+        tblView.isHidden = false
+        lbl.isHidden = true
         tblView.reloadData()
     }
 }
