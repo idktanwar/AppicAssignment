@@ -88,16 +88,17 @@ extension FilterDetailVC {
                 UserDefaults.standard.setValue(true, forKey: APPLY_STRING)
 
                 var filteredData = Constant.APP_DELEGATE.filteredMerchantData
+                
                 if CategorySelected == 0 {
                     //account selcted
                     let accountModel = filteredData!.accountList
-                    var selectedAcc = [String]()
+                    var selectedItem = [String]()
                 
                     for index in selectedItemsIndices {
                         let item = listItems[index.row]
                         _ = accountModel.filter({ (acc) -> Bool in
                             if acc == item {
-                                selectedAcc.append(acc)
+                                selectedItem.append(acc)
                                 return true
                             }else {
                                 return false
@@ -105,15 +106,14 @@ extension FilterDetailVC {
                         })
                     }
                 
-                    filteredData?.accountList = selectedAcc
+                    filteredData?.accountList = selectedItem
                     Constant.APP_DELEGATE.filteredMerchantData = filteredData
                     
                     //now filter the hierarchy
                     let hierarchyData = filteredData?.hierarchy
                     var hierarchyData1 = [Hierarchy]()
-                    selectedAcc.forEach { (accNo) in
+                    selectedItem.forEach { (accNo) in
                         _ = hierarchyData?.filter({ (data) -> Bool in
-                            
                             if data.accountNumber == accNo {
                                 hierarchyData1.append(data)
                                 return true
@@ -131,6 +131,55 @@ extension FilterDetailVC {
                 }
                 else if CategorySelected == 1 {
                     //for brandList filter
+                    let brandModel = filteredData!.brandList
+                    var selectedItem = [String]()
+                
+                    for index in selectedItemsIndices {
+                        let item = listItems[index.row]
+                        _ = brandModel.filter({ (brand) -> Bool in
+                            if brand == item {
+                                selectedItem.append(brand)
+                                return true
+                            }else {
+                                return false
+                            }
+                        })
+                    }
+                
+                    filteredData?.brandList = selectedItem
+                    Constant.APP_DELEGATE.filteredMerchantData = filteredData
+                    
+                    //now filter the hierarchy
+                    let hierarchyData = filteredData?.hierarchy
+                    
+                    var hierarchyData1 = [Hierarchy]()
+                    
+                    hierarchyData?.forEach({ (data) in
+                        var hierarchy = data
+                        let brandList = data.brandNameList
+                        var brandList1 = [BrandNameList]()
+                        selectedItem.forEach { (brand) in
+                            _ = brandList.filter { (brand1) -> Bool in
+                                if brand1.brandName == brand {
+                                    brandList1.append(brand1)
+                                    return true
+                                }
+                                else {
+                                    return false
+                                }
+                            }
+                           
+                        }
+                        hierarchy.brandNameList = brandList1
+                        hierarchyData1.append(hierarchy)
+                    })
+                    
+                    filteredData?.hierarchy = hierarchyData1
+                    Constant.APP_DELEGATE.filteredMerchantData = filteredData
+                    if (delegate != nil) {
+                        self.delegate?.applyFilterToMain()
+                    }
+                    self.navigationController?.popViewController(animated: true)
                 }
                 else {
                     //for location filter
